@@ -1,0 +1,22 @@
+*.xcodeproj/project.xcworkspace
+*.xcodeproj/xcuserdata
+*.xcworkspace/xcuserdata
+build
+.DS_Store
+.idea
+fastlane/test_output
+fastlane/report.xml
+/.bundle
+/vendor
+/test_output
+default.profraw
+fastlane/Preview.html
+swiftlint.result.html
+**/*.xcuserdatad/*
+xcuserdata/
+
+## Secrets
+BuildConfig/credentials.plist
+
+## Playgrounds
+*.xctimeline
