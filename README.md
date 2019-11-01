@@ -11,4 +11,13 @@ The `AppConfiguration` class is responsible for constructing the `AppConstants` 
 
 ### Ensuring secrets are kept clean
 
-A git `pre-commit` hook runs the `remove-credentials.sh` script to make sure any values created at build time by the `update_google_sign_in_credentials.sh` script are removed before a commit is created. This uses `git add -u` to update the index directly.
+Run the `remove_credentials.sh` script to remove build time credentials changes. Alternatively use a git pre-commit hook as described below if you want this to run on every commit.
+
+A git `pre-commit` hook can run the `remove-credentials.sh` script to make sure any values created at build time by the `update_google_sign_in_credentials.sh` script are removed before a commit is created. This uses `git add -u` to update the index directly.
+
+Add the following to your `.git/hooks/pre-commit` if you want this behavior:
+```
+cd "$(dirname "$0")/../.." || exit
+./script/remove_credentials.sh
+git add -u gmail-mark-as-read/Info.plist
+```
