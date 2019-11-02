@@ -8,6 +8,11 @@ REVERSED_CLIENT_ID=$(/usr/libexec/PlistBuddy -c "Print REVERSED_CLIENT_ID" $CRED
 
 if [[ $REVERSED_CLIENT_ID == *"com.google"* ]]; then
 
+  if grep -q $REVERSED_CLIENT_ID "$INFO_PLIST"; then
+    echo "REVERSED_CLIENT_ID exists in Info.plist"
+    exit 0;
+  fi
+
   echo "Inserting Credentials into Info.plist"
   /usr/libexec/PlistBuddy -c "Add :GOOGLE_SIGN_IN_CLIENT_ID string ${CLIENT_ID}" "$INFO_PLIST"
   /usr/libexec/PlistBuddy -c "Add :CFBundleURLTypes array" "$INFO_PLIST"

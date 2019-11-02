@@ -8,12 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		5A3753CACF29C9B404031E7D /* Pods_gmail_mark_as_read.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B0A1D810441866CE283B84E /* Pods_gmail_mark_as_read.framework */; };
-		C30282D0235E92270067D22A /* ServiceRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = C30282CF235E92270067D22A /* ServiceRegistry.swift */; };
 		C30282D3235E92600067D22A /* GoogleSignInService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C30282D2235E92600067D22A /* GoogleSignInService.swift */; };
 		C3101714236E33280067BD31 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3101713236E33280067BD31 /* LoginViewController.swift */; };
+		C3101717236E35050067BD31 /* ApplicationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3101716236E35050067BD31 /* ApplicationCoordinator.swift */; };
+		C3101719236E379C0067BD31 /* LoginCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3101718236E379C0067BD31 /* LoginCoordinator.swift */; };
 		C3357553235DD84B0068AC17 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3357552235DD84B0068AC17 /* AppDelegate.swift */; };
-		C3357555235DD84B0068AC17 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3357554235DD84B0068AC17 /* ViewController.swift */; };
-		C3357558235DD84B0068AC17 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C3357556235DD84B0068AC17 /* Main.storyboard */; };
 		C335755A235DD84C0068AC17 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C3357559235DD84C0068AC17 /* Assets.xcassets */; };
 		C335755D235DD84C0068AC17 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C335755B235DD84C0068AC17 /* LaunchScreen.storyboard */; };
 		C395B8B3235DE68E00C907B0 /* AppConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C395B8B2235DE68E00C907B0 /* AppConfiguration.swift */; };
@@ -23,13 +22,13 @@
 /* Begin PBXFileReference section */
 		111A94C0F8387F05CE8A74A0 /* Pods-gmail-mark-as-read.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-gmail-mark-as-read.release.xcconfig"; path = "Target Support Files/Pods-gmail-mark-as-read/Pods-gmail-mark-as-read.release.xcconfig"; sourceTree = "<group>"; };
 		4B0A1D810441866CE283B84E /* Pods_gmail_mark_as_read.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_gmail_mark_as_read.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C30282CF235E92270067D22A /* ServiceRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceRegistry.swift; sourceTree = "<group>"; };
 		C30282D2235E92600067D22A /* GoogleSignInService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleSignInService.swift; sourceTree = "<group>"; };
 		C3101713236E33280067BD31 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		C3101716236E35050067BD31 /* ApplicationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationCoordinator.swift; sourceTree = "<group>"; };
+		C3101718236E379C0067BD31 /* LoginCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginCoordinator.swift; sourceTree = "<group>"; };
+		C310171A236E3B730067BD31 /* gmail-mark-as-read.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "gmail-mark-as-read.entitlements"; sourceTree = "<group>"; };
 		C335754F235DD84B0068AC17 /* gmail-mark-as-read.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "gmail-mark-as-read.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3357552235DD84B0068AC17 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		C3357554235DD84B0068AC17 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		C3357557235DD84B0068AC17 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C3357559235DD84C0068AC17 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C335755C235DD84C0068AC17 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C335755E235DD84C0068AC17 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -70,10 +69,8 @@
 		C30282D1235E922D0067D22A /* Application launch */ = {
 			isa = PBXGroup;
 			children = (
-				C3101712236E330F0067BD31 /* Sign in */,
 				C3357552235DD84B0068AC17 /* AppDelegate.swift */,
-				C30282CF235E92270067D22A /* ServiceRegistry.swift */,
-				C30282D2235E92600067D22A /* GoogleSignInService.swift */,
+				C3101716236E35050067BD31 /* ApplicationCoordinator.swift */,
 			);
 			path = "Application launch";
 			sourceTree = "<group>";
@@ -81,7 +78,9 @@
 		C3101712236E330F0067BD31 /* Sign in */ = {
 			isa = PBXGroup;
 			children = (
+				C30282D2235E92600067D22A /* GoogleSignInService.swift */,
 				C3101713236E33280067BD31 /* LoginViewController.swift */,
+				C3101718236E379C0067BD31 /* LoginCoordinator.swift */,
 			);
 			path = "Sign in";
 			sourceTree = "<group>";
@@ -107,10 +106,10 @@
 		C3357551235DD84B0068AC17 /* gmail-mark-as-read */ = {
 			isa = PBXGroup;
 			children = (
+				C310171A236E3B730067BD31 /* gmail-mark-as-read.entitlements */,
 				C395B8B9235DE8C800C907B0 /* Application configuration */,
 				C30282D1235E922D0067D22A /* Application launch */,
-				C3357554235DD84B0068AC17 /* ViewController.swift */,
-				C3357556235DD84B0068AC17 /* Main.storyboard */,
+				C3101712236E330F0067BD31 /* Sign in */,
 				C3357559235DD84C0068AC17 /* Assets.xcassets */,
 				C335755B235DD84C0068AC17 /* LaunchScreen.storyboard */,
 				C335755E235DD84C0068AC17 /* Info.plist */,
@@ -191,7 +190,6 @@
 			files = (
 				C335755D235DD84C0068AC17 /* LaunchScreen.storyboard in Resources */,
 				C335755A235DD84C0068AC17 /* Assets.xcassets in Resources */,
-				C3357558235DD84B0068AC17 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -297,26 +295,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				C3101714236E33280067BD31 /* LoginViewController.swift in Sources */,
-				C30282D0235E92270067D22A /* ServiceRegistry.swift in Sources */,
 				C395B8B3235DE68E00C907B0 /* AppConfiguration.swift in Sources */,
+				C3101719236E379C0067BD31 /* LoginCoordinator.swift in Sources */,
 				C30282D3235E92600067D22A /* GoogleSignInService.swift in Sources */,
-				C3357555235DD84B0068AC17 /* ViewController.swift in Sources */,
 				C3357553235DD84B0068AC17 /* AppDelegate.swift in Sources */,
 				C395B8B5235DE6EF00C907B0 /* AppConstants.swift in Sources */,
+				C3101717236E35050067BD31 /* ApplicationCoordinator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		C3357556235DD84B0068AC17 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C3357557235DD84B0068AC17 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		C335755B235DD84C0068AC17 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -449,6 +439,7 @@
 			baseConfigurationReference = EC4657BFC2BB4568606A99AC /* Pods-gmail-mark-as-read.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "gmail-mark-as-read/gmail-mark-as-read.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				INFOPLIST_FILE = "gmail-mark-as-read/Info.plist";
@@ -459,7 +450,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.prodco.gmail-mark-as-read";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -468,6 +459,7 @@
 			baseConfigurationReference = 111A94C0F8387F05CE8A74A0 /* Pods-gmail-mark-as-read.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "gmail-mark-as-read/gmail-mark-as-read.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				INFOPLIST_FILE = "gmail-mark-as-read/Info.plist";
@@ -478,7 +470,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.prodco.gmail-mark-as-read";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
