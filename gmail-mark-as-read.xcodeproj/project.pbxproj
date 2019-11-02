@@ -10,6 +10,7 @@
 		5A3753CACF29C9B404031E7D /* Pods_gmail_mark_as_read.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B0A1D810441866CE283B84E /* Pods_gmail_mark_as_read.framework */; };
 		C30282D0235E92270067D22A /* ServiceRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = C30282CF235E92270067D22A /* ServiceRegistry.swift */; };
 		C30282D3235E92600067D22A /* GoogleSignInService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C30282D2235E92600067D22A /* GoogleSignInService.swift */; };
+		C3101714236E33280067BD31 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3101713236E33280067BD31 /* LoginViewController.swift */; };
 		C3357553235DD84B0068AC17 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3357552235DD84B0068AC17 /* AppDelegate.swift */; };
 		C3357555235DD84B0068AC17 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3357554235DD84B0068AC17 /* ViewController.swift */; };
 		C3357558235DD84B0068AC17 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C3357556235DD84B0068AC17 /* Main.storyboard */; };
@@ -24,6 +25,7 @@
 		4B0A1D810441866CE283B84E /* Pods_gmail_mark_as_read.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_gmail_mark_as_read.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C30282CF235E92270067D22A /* ServiceRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceRegistry.swift; sourceTree = "<group>"; };
 		C30282D2235E92600067D22A /* GoogleSignInService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleSignInService.swift; sourceTree = "<group>"; };
+		C3101713236E33280067BD31 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		C335754F235DD84B0068AC17 /* gmail-mark-as-read.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "gmail-mark-as-read.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3357552235DD84B0068AC17 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C3357554235DD84B0068AC17 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -68,11 +70,20 @@
 		C30282D1235E922D0067D22A /* Application launch */ = {
 			isa = PBXGroup;
 			children = (
+				C3101712236E330F0067BD31 /* Sign in */,
 				C3357552235DD84B0068AC17 /* AppDelegate.swift */,
 				C30282CF235E92270067D22A /* ServiceRegistry.swift */,
 				C30282D2235E92600067D22A /* GoogleSignInService.swift */,
 			);
 			path = "Application launch";
+			sourceTree = "<group>";
+		};
+		C3101712236E330F0067BD31 /* Sign in */ = {
+			isa = PBXGroup;
+			children = (
+				C3101713236E33280067BD31 /* LoginViewController.swift */,
+			);
+			path = "Sign in";
 			sourceTree = "<group>";
 		};
 		C3357546235DD84B0068AC17 = {
@@ -240,6 +251,7 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-gmail-mark-as-read/Pods-gmail-mark-as-read-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Anchorage/Anchorage.framework",
 				"${BUILT_PRODUCTS_DIR}/AppAuth/AppAuth.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMAppAuth/GTMAppAuth.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
@@ -249,6 +261,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Anchorage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AppAuth.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMAppAuth.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
@@ -283,6 +296,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C3101714236E33280067BD31 /* LoginViewController.swift in Sources */,
 				C30282D0235E92270067D22A /* ServiceRegistry.swift in Sources */,
 				C395B8B3235DE68E00C907B0 /* AppConfiguration.swift in Sources */,
 				C30282D3235E92600067D22A /* GoogleSignInService.swift in Sources */,
