@@ -4,6 +4,6 @@ target 'gmail-mark-as-read' do
   use_frameworks!
 
   pod 'Anchorage'
-  pod 'GoogleAPIClientForREST'
+  pod 'GoogleAPIClientForREST/Gmail'
   pod 'GoogleSignIn'
 end

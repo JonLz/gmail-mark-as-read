@@ -25,6 +25,10 @@
 #import "GTLRFramework.h"
 #import "GTLRURITemplate.h"
 #import "GTLRUtilities.h"
+#import "GTLRGmail.h"
+#import "GTLRGmailObjects.h"
+#import "GTLRGmailQuery.h"
+#import "GTLRGmailService.h"
 
 FOUNDATION_EXPORT double GoogleAPIClientForRESTVersionNumber;
 FOUNDATION_EXPORT const unsigned char GoogleAPIClientForRESTVersionString[];

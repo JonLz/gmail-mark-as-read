@@ -5,10 +5,10 @@ PODS:
     - AppAuth/ExternalUserAgent (= 1.2.0)
   - AppAuth/Core (1.2.0)
   - AppAuth/ExternalUserAgent (1.2.0)
-  - GoogleAPIClientForREST (1.3.10):
-    - GoogleAPIClientForREST/Core (= 1.3.10)
-    - GTMSessionFetcher (>= 1.1.7)
   - GoogleAPIClientForREST/Core (1.3.10):
+    - GTMSessionFetcher (>= 1.1.7)
+  - GoogleAPIClientForREST/Gmail (1.3.10):
+    - GoogleAPIClientForREST/Core
     - GTMSessionFetcher (>= 1.1.7)
   - GoogleSignIn (5.0.0):
     - AppAuth (~> 1.1)
@@ -25,7 +25,7 @@ PODS:
 
 DEPENDENCIES:
   - Anchorage
-  - GoogleAPIClientForREST
+  - GoogleAPIClientForREST/Gmail
   - GoogleSignIn
 
 SPEC REPOS:
@@ -45,6 +45,6 @@ SPEC CHECKSUMS:
   GTMAppAuth: 4deac854479704f348309e7b66189e604cf5e01e
   GTMSessionFetcher: 61bb0f61a4cb560030f1222021178008a5727a23
 
-PODFILE CHECKSUM: dd5706d756f49597fa519ed83bdb942e069cfde6
+PODFILE CHECKSUM: 6b794248e9f43c9089791fddc62698fca9596219
 
 COCOAPODS: 1.6.1
