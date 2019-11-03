@@ -442,7 +442,9 @@
 				CODE_SIGN_ENTITLEMENTS = "gmail-mark-as-read/gmail-mark-as-read.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = VX5B6VM8XV;
 				INFOPLIST_FILE = "gmail-mark-as-read/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -462,7 +464,9 @@
 				CODE_SIGN_ENTITLEMENTS = "gmail-mark-as-read/gmail-mark-as-read.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = VX5B6VM8XV;
 				INFOPLIST_FILE = "gmail-mark-as-read/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
