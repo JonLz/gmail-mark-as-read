@@ -12,6 +12,7 @@
 		C3101714236E33280067BD31 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3101713236E33280067BD31 /* LoginViewController.swift */; };
 		C3101717236E35050067BD31 /* ApplicationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3101716236E35050067BD31 /* ApplicationCoordinator.swift */; };
 		C3101719236E379C0067BD31 /* LoginCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3101718236E379C0067BD31 /* LoginCoordinator.swift */; };
+		C310171D236F27AA0067BD31 /* MarkAsReadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C310171C236F27AA0067BD31 /* MarkAsReadViewController.swift */; };
 		C3357553235DD84B0068AC17 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3357552235DD84B0068AC17 /* AppDelegate.swift */; };
 		C335755A235DD84C0068AC17 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C3357559235DD84C0068AC17 /* Assets.xcassets */; };
 		C335755D235DD84C0068AC17 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C335755B235DD84C0068AC17 /* LaunchScreen.storyboard */; };
@@ -27,6 +28,7 @@
 		C3101716236E35050067BD31 /* ApplicationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationCoordinator.swift; sourceTree = "<group>"; };
 		C3101718236E379C0067BD31 /* LoginCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginCoordinator.swift; sourceTree = "<group>"; };
 		C310171A236E3B730067BD31 /* gmail-mark-as-read.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "gmail-mark-as-read.entitlements"; sourceTree = "<group>"; };
+		C310171C236F27AA0067BD31 /* MarkAsReadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkAsReadViewController.swift; sourceTree = "<group>"; };
 		C335754F235DD84B0068AC17 /* gmail-mark-as-read.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "gmail-mark-as-read.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3357552235DD84B0068AC17 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C3357559235DD84C0068AC17 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -85,6 +87,14 @@
 			path = "Sign in";
 			sourceTree = "<group>";
 		};
+		C310171B236F27980067BD31 /* Mark as read */ = {
+			isa = PBXGroup;
+			children = (
+				C310171C236F27AA0067BD31 /* MarkAsReadViewController.swift */,
+			);
+			path = "Mark as read";
+			sourceTree = "<group>";
+		};
 		C3357546235DD84B0068AC17 = {
 			isa = PBXGroup;
 			children = (
@@ -109,6 +119,7 @@
 				C310171A236E3B730067BD31 /* gmail-mark-as-read.entitlements */,
 				C395B8B9235DE8C800C907B0 /* Application configuration */,
 				C30282D1235E922D0067D22A /* Application launch */,
+				C310171B236F27980067BD31 /* Mark as read */,
 				C3101712236E330F0067BD31 /* Sign in */,
 				C3357559235DD84C0068AC17 /* Assets.xcassets */,
 				C335755B235DD84C0068AC17 /* LaunchScreen.storyboard */,
@@ -297,6 +308,7 @@
 				C3101714236E33280067BD31 /* LoginViewController.swift in Sources */,
 				C395B8B3235DE68E00C907B0 /* AppConfiguration.swift in Sources */,
 				C3101719236E379C0067BD31 /* LoginCoordinator.swift in Sources */,
+				C310171D236F27AA0067BD31 /* MarkAsReadViewController.swift in Sources */,
 				C30282D3235E92600067D22A /* GoogleSignInService.swift in Sources */,
 				C3357553235DD84B0068AC17 /* AppDelegate.swift in Sources */,
 				C395B8B5235DE6EF00C907B0 /* AppConstants.swift in Sources */,

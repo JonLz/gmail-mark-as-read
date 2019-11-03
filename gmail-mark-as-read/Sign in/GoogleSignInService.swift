@@ -14,13 +14,35 @@ final class GoogleSignInService: NSObject {
     let GIDSignIn: GIDSignIn? = GoogleSignIn.GIDSignIn.sharedInstance()
 
     func start() {
-        let clientId = AppConfiguration().appConstants.googleSignInClientId
-        GIDSignIn?.clientID = clientId
-        GIDSignIn?.delegate = self
+        setUpGIDSignIn()
     }
 
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any]) -> Bool {
-      return GIDSignIn?.handle(url) ?? false
+        guard let GIDSignIn = GIDSignIn else {
+            return false
+        }
+
+        return GIDSignIn.handle(url)
+    }
+
+    private func setUpGIDSignIn() {
+        guard let GIDSignIn = GIDSignIn else {
+            return
+        }
+
+        /// Client identifier
+        let clientId = AppConfiguration().appConstants.googleSignInClientId
+        GIDSignIn.clientID = clientId
+
+        /// Scopes
+        /// Requesting additional scopes: https://developers.google.com/identity/sign-in/ios/additional-scopes
+        /// Gmail scopes: https://developers.google.com/gmail/api/auth/scopes
+        let gmailLabelScope = "https://www.googleapis.com/auth/gmail.labels"
+        let scopes = GIDSignIn.scopes + [gmailLabelScope]
+        GIDSignIn.scopes = scopes
+
+        /// Internal delegate
+        GIDSignIn.delegate = self
     }
 }
 
