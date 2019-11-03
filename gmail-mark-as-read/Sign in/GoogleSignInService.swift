@@ -8,6 +8,7 @@
 
 import Foundation
 import GoogleSignIn
+import GoogleAPIClientForREST.GTLRGmailService
 
 final class GoogleSignInService: NSObject {
 
@@ -37,8 +38,7 @@ final class GoogleSignInService: NSObject {
         /// Scopes
         /// Requesting additional scopes: https://developers.google.com/identity/sign-in/ios/additional-scopes
         /// Gmail scopes: https://developers.google.com/gmail/api/auth/scopes
-        let gmailLabelScope = "https://www.googleapis.com/auth/gmail.labels"
-        let scopes = GIDSignIn.scopes + [gmailLabelScope]
+        let scopes = GIDSignIn.scopes + [kGTLRAuthScopeGmailLabels]
         GIDSignIn.scopes = scopes
 
         /// Internal delegate
