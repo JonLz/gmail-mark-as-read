@@ -8,15 +8,17 @@
 
 import UIKit
 import GoogleSignIn
+import GoogleAPIClientForREST
 
 /// Invocable methods for child contexts
 protocol ApplicationInteractable {
     func logout()
 }
 
-/// Dependency injection container for exposing root level protocols to child contexts
-struct ApplicationContext {
-    var interactor: ApplicationInteractable
+struct AppDependency: HasApplicationDependency, HasUserDependency, HasGmailServiceDependency {
+    let applicationInteractor: ApplicationInteractable
+    let GIDGoogleUser: GIDGoogleUser
+    let gmailService: GTLRService
 }
 
 final class ApplicationCoordinator {
@@ -40,8 +42,13 @@ final class ApplicationCoordinator {
         return loginCoordinator.application(app, open: url, options: options)
     }
 
-    private func makeLoggedInViewController() -> UIViewController {
-        return MarkAsReadViewController(applicationContext: ApplicationContext(interactor: self))
+    private func makeLoggedInViewController(user: GIDGoogleUser) -> UIViewController {
+        let appDependency = AppDependency(
+            applicationInteractor: self,
+            GIDGoogleUser: user,
+            gmailService: GTLRGmailService()
+        )
+        return MarkAsReadViewController(dependencies: appDependency)
     }
     
     private func makeLoginViewController() -> UIViewController {
@@ -55,7 +62,7 @@ final class ApplicationCoordinator {
 
 extension ApplicationCoordinator: GoogleSignInServiceDelegate  {
     func didSignIn(signInService: GoogleSignInService, user: GIDGoogleUser) {
-        let loggedInViewController = makeLoggedInViewController()
+        let loggedInViewController = makeLoggedInViewController(user: user)
         window?.rootViewController?.present(loggedInViewController, animated: false, completion: nil)
     }
     
@@ -68,7 +75,7 @@ extension ApplicationCoordinator: GoogleSignInServiceDelegate  {
 
 extension ApplicationCoordinator: LoginCoordinatorDelegate {
     func didSignIn(coordinator: LoginCoordinator, user: GIDGoogleUser) {
-        let loggedInViewController = makeLoggedInViewController()
+        let loggedInViewController = makeLoggedInViewController(user: user)
         window?.rootViewController?.present(loggedInViewController, animated: false, completion: nil)
     }
 }
