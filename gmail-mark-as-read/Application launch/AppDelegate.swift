@@ -11,14 +11,15 @@ import UIKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
-    var applicationCoordinator = ApplicationCoordinator()
+    private lazy var applicationCoordinator = ApplicationCoordinator(window: window)
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        applicationCoordinator.start()
-        let vc = applicationCoordinator.makeRootViewController()
         window = UIWindow(frame: UIScreen.main.bounds)
-        window?.rootViewController = vc
+        window?.isHidden = false
+        window?.isUserInteractionEnabled = true
         window?.makeKeyAndVisible()
+        
+        applicationCoordinator.start()
         return true
     }
 

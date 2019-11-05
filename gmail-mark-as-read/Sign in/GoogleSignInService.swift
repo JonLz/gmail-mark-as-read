@@ -10,27 +10,33 @@ import Foundation
 import GoogleSignIn
 import GoogleAPIClientForREST.GTLRGmailService
 
+protocol GoogleSignInServiceDelegate: class {
+    func didSignIn(signInService: GoogleSignInService, user: GIDGoogleUser)
+    func failedSignIn()
+}
+
 final class GoogleSignInService: NSObject {
 
-    let GIDSignIn: GIDSignIn? = GoogleSignIn.GIDSignIn.sharedInstance()
-
+    let GIDSignIn: GIDSignIn = GoogleSignIn.GIDSignIn.sharedInstance()
+    weak var delegate: GoogleSignInServiceDelegate?
+    
     func start() {
         setUpGIDSignIn()
     }
+    
+    func logout() {
+        GIDSignIn.signOut()
+    }
+    
+    func restorePreviousSignIn() {
+        GIDSignIn.restorePreviousSignIn()
+    }
 
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any]) -> Bool {
-        guard let GIDSignIn = GIDSignIn else {
-            return false
-        }
-
         return GIDSignIn.handle(url)
     }
 
     private func setUpGIDSignIn() {
-        guard let GIDSignIn = GIDSignIn else {
-            return
-        }
-
         /// Client identifier
         let clientId = AppConfiguration().appConstants.googleSignInClientId
         GIDSignIn.clientID = clientId
@@ -49,20 +55,17 @@ final class GoogleSignInService: NSObject {
 extension GoogleSignInService: GIDSignInDelegate {
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
         if let error = error {
-          if (error as NSError).code == GIDSignInErrorCode.hasNoAuthInKeychain.rawValue {
-            print("The user has not signed in before or they have since signed out.")
-          } else {
-            print("\(error.localizedDescription)")
-          }
-          return
+            if (error as NSError).code == GIDSignInErrorCode.hasNoAuthInKeychain.rawValue {
+                print("The user has not signed in before or they have since signed out.")
+            } else {
+                print("\(error.localizedDescription)")
+            }
+            delegate?.failedSignIn()
+            return
+        } else if let user = user {
+            delegate?.didSignIn(signInService: self, user: user)
+        } else {
+            print("GoogleSignInService#sign(signIn:didSignInFor:withError could not handle result.")
         }
-        // Perform any operations on signed in user here.
-        let userId = user.userID                  // For client-side use only!
-        let idToken = user.authentication.idToken // Safe to send to the server
-        let fullName = user.profile.name
-        let givenName = user.profile.givenName
-        let familyName = user.profile.familyName
-        let email = user.profile.email
-        // ...
     }
 }

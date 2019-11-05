@@ -25,13 +25,10 @@ final class LoginViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        signInService.GIDSignIn?.presentingViewController = self
-
-        // Automatically sign in the user.
-        signInService.GIDSignIn?.restorePreviousSignIn()
-
         view.backgroundColor = .white
+        
+        signInService.GIDSignIn.presentingViewController = self
+
         setUpLayout()
     }
 
