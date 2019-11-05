@@ -36,6 +36,7 @@ final class MarkAsReadViewController: UIViewController {
         user = dependencies.GIDGoogleUser
         super.init(nibName: nil, bundle: nil)
         
+        unreadMailView.delegate = self
         unreadMailService.delegate = self
     }
     
@@ -61,8 +62,8 @@ final class MarkAsReadViewController: UIViewController {
         view.addSubview(logoutButton)
         
         unreadMailView.topAnchor == view.verticalAnchors.first + 60
-        unreadMailView.centerXAnchor == view.centerXAnchor
-        unreadMailView.sizeAnchors == CGSize(width: 160, height: 40)
+        unreadMailView.heightAnchor == 60
+        unreadMailView.horizontalAnchors == view.horizontalAnchors + 20
         
         logoutButton.bottomAnchor == view.bottomAnchor - 60
         logoutButton.centerXAnchor == view.centerXAnchor
@@ -77,5 +78,12 @@ extension MarkAsReadViewController: UnreadMailServiceDelegate {
     
     func didFail(service: UnreadMailService) {
         unreadMailView.configure(for: .error(errorDescription: "Could not retrieve mail"))
+    }
+}
+
+extension MarkAsReadViewController: UnreadMailViewDelegate {
+    func didTapReloadButton(view: UnreadMailView) {
+        view.configure(for: .loading)
+        unreadMailService.fetchUnreadMail()
     }
 }

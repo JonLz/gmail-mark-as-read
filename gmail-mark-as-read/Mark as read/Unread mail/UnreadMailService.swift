@@ -8,6 +8,7 @@
 
 import GoogleAPIClientForREST.GTLRGmailService
 import GoogleSignIn
+import GTMSessionFetcher
 
 protocol UnreadMailServiceDelegate: class {
     func didComplete(service: UnreadMailService, unreadMailCount: Int)
@@ -25,6 +26,7 @@ final class UnreadMailService {
     init(dependencies: Dependencies) {
         user = dependencies.GIDGoogleUser
         service = dependencies.gmailService
+        service.authorizer = user.authentication.fetcherAuthorizer()
     }
     
     func fetchUnreadMail() {
