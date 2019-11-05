@@ -1,0 +1,3 @@
+cd "$(dirname "$0")/../.." || exit
+./script/remove_credentials.sh
+git add -u gmail-mark-as-read/Info.plist

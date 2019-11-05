@@ -21,3 +21,5 @@ cd "$(dirname "$0")/../.." || exit
 ./script/remove_credentials.sh
 git add -u gmail-mark-as-read/Info.plist
 ```
+
+Or copy it directly from the provided script with `cp script/pre-commit .git/hooks/pre-commit`
