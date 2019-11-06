@@ -20,6 +20,11 @@ final class GoogleSignInService: NSObject {
     typealias Dependencies = HasLogServiceDependency
     
     weak var delegate: GoogleSignInServiceDelegate?
+    
+    var hasPreviousSignIn: Bool {
+        return GIDSignIn.hasPreviousSignIn()
+    }
+    
     let GIDSignIn: GIDSignIn = GoogleSignIn.GIDSignIn.sharedInstance()
     private let logService: LogServicing
     

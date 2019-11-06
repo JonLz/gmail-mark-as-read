@@ -32,7 +32,6 @@ final class ApplicationCoordinator {
 
     weak var window: UIWindow?
     private let loginCoordinator = LoginCoordinator()
-    private let signInService = GoogleSignInService(dependencies: UnauthenticatedDependency.make)
     
     init(window: UIWindow?) {
         self.window = window
@@ -40,9 +39,6 @@ final class ApplicationCoordinator {
     
     func start() {
         window?.rootViewController = makeLoginViewController()
-        signInService.delegate = self
-        signInService.start()
-        signInService.restorePreviousSignIn()
     }
 
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any]) -> Bool {
@@ -66,19 +62,6 @@ final class ApplicationCoordinator {
     }
 }
 
-// MARK: - GoogleSignInDelegate
-
-extension ApplicationCoordinator: GoogleSignInServiceDelegate  {
-    func didSignIn(signInService: GoogleSignInService, user: GIDGoogleUser) {
-        let loggedInViewController = makeLoggedInViewController(user: user)
-        window?.rootViewController?.present(loggedInViewController, animated: false, completion: nil)
-    }
-    
-    func failedSignIn() {
-        // no-op
-    }
-}
-
 // MARK: - LoginCoordinatorDelegate
 
 extension ApplicationCoordinator: LoginCoordinatorDelegate {
@@ -92,7 +75,7 @@ extension ApplicationCoordinator: LoginCoordinatorDelegate {
 
 extension ApplicationCoordinator: ApplicationInteractable {
     func logout() {
-        signInService.logout()
+        loginCoordinator.logout()
         window?.rootViewController?.dismiss(animated: true, completion: nil)
     }
 }

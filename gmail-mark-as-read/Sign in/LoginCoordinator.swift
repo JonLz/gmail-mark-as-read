@@ -16,15 +16,21 @@ protocol LoginCoordinatorDelegate: class {
 final class LoginCoordinator {
 
     weak var delegate: LoginCoordinatorDelegate?
+
     private let signInService = GoogleSignInService(dependencies: UnauthenticatedDependency.make)
 
-    private(set) lazy var loginViewController: LoginViewController = {
-        return LoginViewController(signInService: signInService)
+    private(set) lazy var loginViewController: UIViewController = {
+        let loginViewController = LoginViewController(signInService: signInService)
+        return loginViewController
     }()
 
     func start() {
         signInService.delegate = self
         signInService.start()
+    }
+    
+    func logout() {
+        signInService.logout()
     }
 
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any]) -> Bool {
