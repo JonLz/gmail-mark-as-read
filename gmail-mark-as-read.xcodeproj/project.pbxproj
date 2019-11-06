@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5A3753CACF29C9B404031E7D /* Pods_gmail_mark_as_read.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B0A1D810441866CE283B84E /* Pods_gmail_mark_as_read.framework */; };
+		613FF369237307A5001EC31A /* LogService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613FF368237307A5001EC31A /* LogService.swift */; };
 		616E897F2371A7F300EBEB0D /* UnreadMailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616E897E2371A7F300EBEB0D /* UnreadMailView.swift */; };
 		616E89812371AB7900EBEB0D /* UnreadMailService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616E89802371AB7900EBEB0D /* UnreadMailService.swift */; };
 		616E89842371B69E00EBEB0D /* Dependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616E89832371B69E00EBEB0D /* Dependencies.swift */; };
@@ -29,6 +30,7 @@
 /* Begin PBXFileReference section */
 		111A94C0F8387F05CE8A74A0 /* Pods-gmail-mark-as-read.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-gmail-mark-as-read.release.xcconfig"; path = "Target Support Files/Pods-gmail-mark-as-read/Pods-gmail-mark-as-read.release.xcconfig"; sourceTree = "<group>"; };
 		4B0A1D810441866CE283B84E /* Pods_gmail_mark_as_read.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_gmail_mark_as_read.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		613FF368237307A5001EC31A /* LogService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogService.swift; sourceTree = "<group>"; };
 		616E897E2371A7F300EBEB0D /* UnreadMailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnreadMailView.swift; sourceTree = "<group>"; };
 		616E89802371AB7900EBEB0D /* UnreadMailService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnreadMailService.swift; sourceTree = "<group>"; };
 		616E89832371B69E00EBEB0D /* Dependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dependencies.swift; sourceTree = "<group>"; };
@@ -63,6 +65,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		613FF3672373079E001EC31A /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				613FF368237307A5001EC31A /* LogService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		616E897D2371A7B700EBEB0D /* Unread mail */ = {
 			isa = PBXGroup;
 			children = (
@@ -147,6 +157,7 @@
 		C3357551235DD84B0068AC17 /* gmail-mark-as-read */ = {
 			isa = PBXGroup;
 			children = (
+				613FF3672373079E001EC31A /* Services */,
 				C37665252372F01C006A5C47 /* Extensions */,
 				C310171A236E3B730067BD31 /* gmail-mark-as-read.entitlements */,
 				C395B8B9235DE8C800C907B0 /* Application configuration */,
@@ -357,6 +368,7 @@
 				616E89842371B69E00EBEB0D /* Dependencies.swift in Sources */,
 				C37665272372F039006A5C47 /* Int+Extension.swift in Sources */,
 				C30282D3235E92600067D22A /* GoogleSignInService.swift in Sources */,
+				613FF369237307A5001EC31A /* LogService.swift in Sources */,
 				C3357553235DD84B0068AC17 /* AppDelegate.swift in Sources */,
 				61C17D802373011A00087C82 /* GTLRErrorObject+LocalizedError.swift in Sources */,
 				C395B8B5235DE6EF00C907B0 /* AppConstants.swift in Sources */,

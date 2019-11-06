@@ -11,7 +11,7 @@ import GoogleSignIn
 
 final class MarkAsReadViewController: UIViewController {
     
-    typealias Dependencies = HasApplicationDependency & HasUserDependency & HasGmailServiceDependency
+    typealias Dependencies = HasApplicationDependency & HasUserDependency & HasGmailServiceDependency & HasLogServiceDependency
     
     let applicationInteractor: ApplicationInteractable
     let markAsReadService: MarkAsReadService

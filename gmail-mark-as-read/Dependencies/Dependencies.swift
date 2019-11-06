@@ -19,6 +19,10 @@ protocol HasGmailServiceDependency {
     var gmailService: GTLRService { get }
 }
 
+protocol HasLogServiceDependency {
+    var logService: LogServicing { get }
+}
+
 protocol HasUnreadMailServiceDependency {
     var unreadMailService: UnreadMailService { get }
 }

@@ -16,7 +16,7 @@ protocol LoginCoordinatorDelegate: class {
 final class LoginCoordinator {
 
     weak var delegate: LoginCoordinatorDelegate?
-    private let signInService = GoogleSignInService()
+    private let signInService = GoogleSignInService(dependencies: UnauthenticatedDependency.make)
 
     private(set) lazy var loginViewController: LoginViewController = {
         return LoginViewController(signInService: signInService)

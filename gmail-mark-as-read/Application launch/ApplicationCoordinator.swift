@@ -15,17 +15,24 @@ protocol ApplicationInteractable {
     func logout()
 }
 
-struct AppDependency: HasApplicationDependency, HasUserDependency, HasGmailServiceDependency {
+struct AuthenticatedDependency: HasApplicationDependency, HasUserDependency, HasGmailServiceDependency, HasLogServiceDependency {
     let applicationInteractor: ApplicationInteractable
     let GIDGoogleUser: GIDGoogleUser
     let gmailService: GTLRService
+    let logService: LogServicing
+}
+
+struct UnauthenticatedDependency: HasLogServiceDependency {
+    let logService: LogServicing
+    
+    static let make = UnauthenticatedDependency(logService: LogService())
 }
 
 final class ApplicationCoordinator {
 
     weak var window: UIWindow?
     private let loginCoordinator = LoginCoordinator()
-    private let signInService = GoogleSignInService()
+    private let signInService = GoogleSignInService(dependencies: UnauthenticatedDependency.make)
     
     init(window: UIWindow?) {
         self.window = window
@@ -43,12 +50,13 @@ final class ApplicationCoordinator {
     }
 
     private func makeLoggedInViewController(user: GIDGoogleUser) -> UIViewController {
-        let appDependency = AppDependency(
+        let authenticatedDependency = AuthenticatedDependency(
             applicationInteractor: self,
             GIDGoogleUser: user,
-            gmailService: GTLRGmailService()
+            gmailService: GTLRGmailService(),
+            logService: LogService()
         )
-        return MarkAsReadViewController(dependencies: appDependency)
+        return MarkAsReadViewController(dependencies: authenticatedDependency)
     }
     
     private func makeLoginViewController() -> UIViewController {

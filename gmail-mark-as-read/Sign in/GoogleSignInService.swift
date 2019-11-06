@@ -17,8 +17,15 @@ protocol GoogleSignInServiceDelegate: class {
 
 final class GoogleSignInService: NSObject {
 
-    let GIDSignIn: GIDSignIn = GoogleSignIn.GIDSignIn.sharedInstance()
+    typealias Dependencies = HasLogServiceDependency
+    
     weak var delegate: GoogleSignInServiceDelegate?
+    let GIDSignIn: GIDSignIn = GoogleSignIn.GIDSignIn.sharedInstance()
+    private let logService: LogServicing
+    
+    init(dependencies: Dependencies) {
+        logService = dependencies.logService
+    }
     
     func start() {
         setUpGIDSignIn()
@@ -56,16 +63,16 @@ extension GoogleSignInService: GIDSignInDelegate {
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
         if let error = error {
             if (error as NSError).code == GIDSignInErrorCode.hasNoAuthInKeychain.rawValue {
-                print("The user has not signed in before or they have since signed out.")
+                logService.log("The user has not signed in before or they have since signed out.")
             } else {
-                print("\(error.localizedDescription)")
+                logService.log("\(error.localizedDescription)")
             }
             delegate?.failedSignIn()
             return
         } else if let user = user {
             delegate?.didSignIn(signInService: self, user: user)
         } else {
-            print("GoogleSignInService#sign(signIn:didSignInFor:withError could not handle result.")
+            logService.log("GoogleSignInService#sign(signIn:didSignInFor:withError could not handle result.")
         }
     }
 }

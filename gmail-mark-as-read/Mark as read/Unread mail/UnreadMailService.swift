@@ -17,33 +17,33 @@ protocol UnreadMailServiceDelegate: class {
 
 final class UnreadMailService {
     
-    typealias Dependencies = HasUserDependency & HasGmailServiceDependency
+    typealias Dependencies = HasUserDependency & HasGmailServiceDependency & HasLogServiceDependency
     
     weak var delegate: UnreadMailServiceDelegate?
-    let user: GIDGoogleUser
-    let service: GTLRService
+    
+    private let logService: LogServicing
+    private let service: GTLRService
+    private let user: GIDGoogleUser
     
     init(dependencies: Dependencies) {
-        user = dependencies.GIDGoogleUser
+        logService = dependencies.logService
         service = dependencies.gmailService
+        user = dependencies.GIDGoogleUser
+        
         service.authorizer = user.authentication.fetcherAuthorizer()
     }
     
     func fetchUnreadMail() {
         let query = GTLRGmailQuery_UsersLabelsGet.query(withUserId: user.userID, identifier: "UNREAD")
         _ = service.executeQuery(query) { [weak self] (ticket, responseObject, error) in
-            guard let self = self else {
-                return
-            }
-            
             if let error = error {
-                print("UnreadMailService query:\(query) error:\(error.localizedDescription)")
-                self.delegate?.didFail(service: self)
+                self?.logService.log("UnreadMailService query:\(query) error:\(error.localizedDescription)")
+                self?.delegate?.didFail(service: self!)
             } else if let label = responseObject as? GTLRGmail_Label,
                 let unreadMailCount = label.messagesUnread?.intValue {
-                self.delegate?.didComplete(service: self, unreadMailCount: unreadMailCount)
+                self?.delegate?.didComplete(service: self!, unreadMailCount: unreadMailCount)
             } else {
-                print("UnreadMailService could not process query:\(query) ticket:\(ticket.description) responseObject:\(responseObject.debugDescription)")
+                self?.logService.log("UnreadMailService could not process query:\(query) ticket:\(ticket.description) responseObject:\(responseObject.debugDescription)")
             }
         }
     }

@@ -36,15 +36,19 @@ enum MarkAsReadServiceError: LocalizedError {
 
 final class MarkAsReadService {
 
-    typealias Dependencies = HasUserDependency & HasGmailServiceDependency
+    typealias Dependencies = HasUserDependency & HasGmailServiceDependency & HasLogServiceDependency
 
     weak var delegate: MarkAsReadServiceDelegate?
-    let user: GIDGoogleUser
-    let service: GTLRService
-
+    
+    private let logService: LogServicing
+    private let service: GTLRService
+    private let user: GIDGoogleUser
+    
     init(dependencies: Dependencies) {
-        user = dependencies.GIDGoogleUser
+        logService = dependencies.logService
         service = dependencies.gmailService
+        user = dependencies.GIDGoogleUser
+        
         service.authorizer = user.authentication.fetcherAuthorizer()
     }
 
@@ -74,14 +78,14 @@ final class MarkAsReadService {
         batchRequest.ids = messages.compactMap { $0.identifier }
         let query = GTLRGmailQuery_UsersMessagesBatchModify.query(withObject: batchRequest, userId: user.userID)
 
-        _ = service.executeQuery(query) { (ticket, responseObject, error) in
+        _ = service.executeQuery(query) { [weak self] (ticket, responseObject, error) in
             if let error = error {
-                print("MarkAsReadService query:\(query) error:\(error.localizedDescription)")
+                self?.logService.log("MarkAsReadService query:\(query) error:\(error.localizedDescription)")
                 completion(.failure(.GTLRError(error)))
             } else if ticket.statusCode.isSuccessfulHTTPStatusCode {
                 completion(.success(()))
             } else {
-                print("MarkAsReadService could not process query:\(query) ticket:\(ticket.description) responseObject:\(responseObject.debugDescription)")
+                self?.logService.log("MarkAsReadService could not process query:\(query) ticket:\(ticket.description) responseObject:\(responseObject.debugDescription)")
                 completion(.failure(.unknownError))
             }
         }
@@ -91,9 +95,9 @@ final class MarkAsReadService {
         let query = GTLRGmailQuery_UsersMessagesList.query(withUserId: user.userID)
         query.labelIds = ["UNREAD"]
         
-        _ = service.executeQuery(query) { (ticket, responseObject, error) in
+        _ = service.executeQuery(query) { [weak self] (ticket, responseObject, error) in
             if let error = error {
-                print("MarkAsReadService query:\(query) error:\(error.localizedDescription)")
+                self?.logService.log("MarkAsReadService query:\(query) error:\(error.localizedDescription)")
                 completion(.failure(.GTLRError(error)))
             } else if let response = responseObject as? GTLRGmail_ListMessagesResponse {
                 if let messages = response.messages {
@@ -102,7 +106,7 @@ final class MarkAsReadService {
                     completion(.failure(.noUnreadMessages))
                 }
             } else {
-                print("MarkAsReadService could not process query:\(query) ticket:\(ticket.description) responseObject:\(responseObject.debugDescription)")
+                self?.logService.log("MarkAsReadService could not process query:\(query) ticket:\(ticket.description) responseObject:\(responseObject.debugDescription)")
                 completion(.failure(.unknownError))
             }
         }
