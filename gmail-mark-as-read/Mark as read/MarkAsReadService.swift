@@ -12,10 +12,27 @@ import GTMSessionFetcher
 
 protocol MarkAsReadServiceDelegate: class {
     func didComplete(service: MarkAsReadService)
-    func didFail(service: MarkAsReadService)
+    func didFail(service: MarkAsReadService, error: MarkAsReadServiceError)
 }
 
-struct NilError: CustomNSError { }
+enum MarkAsReadServiceError: LocalizedError {
+    case GTLRError(Error)
+    case noUnreadMessages
+    case unknownError
+    
+    var errorDescription: String? {
+        switch self {
+        case .GTLRError(let error):
+            if let gtlrErrorMessage = GTLRErrorObject(foundationError: error).errorDescription {
+                return gtlrErrorMessage
+            } else {
+                return MarkAsReadServiceError.unknownError.errorDescription
+            }
+        case .noUnreadMessages: return NSLocalizedString("No unread messages found.", comment: "")
+        case .unknownError: return NSLocalizedString("Mail could not be marked as read. Please try again later.", comment: "")
+        }
+    }
+}
 
 final class MarkAsReadService {
 
@@ -32,12 +49,12 @@ final class MarkAsReadService {
     }
 
     func batchMarkAsRead() {
-        let completion: (Result<Void, Error>) -> () = { [weak self] result in
+        let completion: (Result<Void, MarkAsReadServiceError>) -> () = { [weak self] result in
             switch result {
             case .success:
                 self?.delegate?.didComplete(service: self!)
-            case .failure:
-                self?.delegate?.didFail(service: self!)
+            case .failure(let error):
+                self?.delegate?.didFail(service: self!, error: error)
             }
         }
 
@@ -45,43 +62,48 @@ final class MarkAsReadService {
             switch result {
             case .success(let messages):
                 self?.batchMarkMessagesAsRead(messages: messages, completion: completion)
-            case .failure:
-                self?.delegate?.didFail(service: self!)
+            case .failure(let error):
+                self?.delegate?.didFail(service: self!, error: error)
             }
         }
     }
 
-    private func batchMarkMessagesAsRead(messages: [GTLRGmail_Message], completion: @escaping (Result<Void, Error>) -> ()) {
+    private func batchMarkMessagesAsRead(messages: [GTLRGmail_Message], completion: @escaping (Result<Void, MarkAsReadServiceError>) -> ()) {
         let batchRequest = GTLRGmail_BatchModifyMessagesRequest()
         batchRequest.removeLabelIds = ["UNREAD"]
+        batchRequest.ids = messages.compactMap { $0.identifier }
         let query = GTLRGmailQuery_UsersMessagesBatchModify.query(withObject: batchRequest, userId: user.userID)
 
         _ = service.executeQuery(query) { (ticket, responseObject, error) in
             if let error = error {
                 print("MarkAsReadService query:\(query) error:\(error.localizedDescription)")
-                completion(.failure(error))
+                completion(.failure(.GTLRError(error)))
             } else if ticket.statusCode.isSuccessfulHTTPStatusCode {
                 completion(.success(()))
             } else {
                 print("MarkAsReadService could not process query:\(query) ticket:\(ticket.description) responseObject:\(responseObject.debugDescription)")
-                completion(.failure(NilError()))
+                completion(.failure(.unknownError))
             }
         }
     }
 
-    private func listUnreadMessages(_ completion: @escaping (Result<[GTLRGmail_Message], Error>) -> ()) {
+    private func listUnreadMessages(_ completion: @escaping (Result<[GTLRGmail_Message], MarkAsReadServiceError>) -> ()) {
         let query = GTLRGmailQuery_UsersMessagesList.query(withUserId: user.userID)
         query.labelIds = ["UNREAD"]
-
+        
         _ = service.executeQuery(query) { (ticket, responseObject, error) in
             if let error = error {
                 print("MarkAsReadService query:\(query) error:\(error.localizedDescription)")
-                completion(.failure(error))
-            } else if let messages = responseObject as? [GTLRGmail_Message] {
-                completion(.success(messages))
+                completion(.failure(.GTLRError(error)))
+            } else if let response = responseObject as? GTLRGmail_ListMessagesResponse {
+                if let messages = response.messages {
+                    completion(.success(messages))
+                } else {
+                    completion(.failure(.noUnreadMessages))
+                }
             } else {
                 print("MarkAsReadService could not process query:\(query) ticket:\(ticket.description) responseObject:\(responseObject.debugDescription)")
-                completion(.failure(NilError()))
+                completion(.failure(.unknownError))
             }
         }
     }

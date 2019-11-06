@@ -24,6 +24,13 @@ final class MarkAsReadViewController: UIViewController {
         return view
     }()
     
+    private lazy var markAsReadButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Mark all mail read", for: .normal)
+        button.addTarget(self, action: #selector(markAsRead), for: .touchUpInside)
+        return button
+    }()
+    
     private lazy var logoutButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Logout", for: .normal)
@@ -56,17 +63,24 @@ final class MarkAsReadViewController: UIViewController {
         unreadMailService.fetchUnreadMail()
     }
     
+    @objc func markAsRead() {
+        markAsReadService.batchMarkAsRead()
+    }
+    
     @objc func logout() {
         applicationInteractor.logout()
     }
     
     private func setUpLayout() {
         view.addSubview(unreadMailView)
+        view.addSubview(markAsReadButton)
         view.addSubview(logoutButton)
         
         unreadMailView.topAnchor == view.verticalAnchors.first + 60
         unreadMailView.heightAnchor == 60
         unreadMailView.horizontalAnchors == view.horizontalAnchors + 20
+        
+        markAsReadButton.centerAnchors == view.centerAnchors
         
         logoutButton.bottomAnchor == view.bottomAnchor - 60
         logoutButton.centerXAnchor == view.centerXAnchor
@@ -89,10 +103,10 @@ extension MarkAsReadViewController: MarkAsReadServiceDelegate {
         present(alertController, animated: true, completion: nil)
     }
 
-    func didFail(service: MarkAsReadService) {
+    func didFail(service: MarkAsReadService, error: MarkAsReadServiceError) {
         let alertController = UIAlertController(
             title: "Operation failed",
-            message: "Mail could not be marked as read. Please try again later.",
+            message: error.errorDescription,
             preferredStyle: .alert
         )
         let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)

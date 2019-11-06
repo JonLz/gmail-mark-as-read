@@ -44,7 +44,7 @@ final class GoogleSignInService: NSObject {
         /// Scopes
         /// Requesting additional scopes: https://developers.google.com/identity/sign-in/ios/additional-scopes
         /// Gmail scopes: https://developers.google.com/gmail/api/auth/scopes
-        let scopes = GIDSignIn.scopes + [kGTLRAuthScopeGmailLabels]
+        let scopes = GIDSignIn.scopes + [kGTLRAuthScopeGmailLabels, kGTLRAuthScopeGmailModify]
         GIDSignIn.scopes = scopes
 
         /// Internal delegate
