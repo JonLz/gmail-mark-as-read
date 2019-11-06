@@ -32,7 +32,7 @@ final class MarkAsReadService {
     }
 
     func batchMarkAsRead() {
-        let listUnreadMessagesSuccess: (Result<Void, Error>) -> () = { [weak self] result in
+        let completion: (Result<Void, Error>) -> () = { [weak self] result in
             switch result {
             case .success:
                 self?.delegate?.didComplete(service: self!)
@@ -44,7 +44,7 @@ final class MarkAsReadService {
         listUnreadMessages() { [weak self] result in
             switch result {
             case .success(let messages):
-                self?.batchMarkMessagesAsRead(messages: messages, completion: listUnreadMessagesSuccess)
+                self?.batchMarkMessagesAsRead(messages: messages, completion: completion)
             case .failure:
                 self?.delegate?.didFail(service: self!)
             }
