@@ -14,6 +14,7 @@ final class MarkAsReadViewController: UIViewController {
     typealias Dependencies = HasApplicationDependency & HasUserDependency & HasGmailServiceDependency
     
     let applicationInteractor: ApplicationInteractable
+    let markAsReadService: MarkAsReadService
     let unreadMailService: UnreadMailService
     let user: GIDGoogleUser
     
@@ -32,10 +33,12 @@ final class MarkAsReadViewController: UIViewController {
     
     init(dependencies: Dependencies) {
         applicationInteractor = dependencies.applicationInteractor
+        markAsReadService = MarkAsReadService(dependencies: dependencies)
         unreadMailService = UnreadMailService(dependencies: dependencies)
         user = dependencies.GIDGoogleUser
         super.init(nibName: nil, bundle: nil)
-        
+
+        markAsReadService.delegate = self
         unreadMailView.delegate = self
         unreadMailService.delegate = self
     }
@@ -68,6 +71,33 @@ final class MarkAsReadViewController: UIViewController {
         logoutButton.bottomAnchor == view.bottomAnchor - 60
         logoutButton.centerXAnchor == view.centerXAnchor
         logoutButton.sizeAnchors == CGSize(width: 100, height: 40)
+    }
+}
+
+extension MarkAsReadViewController: MarkAsReadServiceDelegate {
+    func didComplete(service: MarkAsReadService) {
+        unreadMailView.configure(for: .loading)
+        unreadMailService.fetchUnreadMail()
+
+        let alertController = UIAlertController(
+            title: "Operation complete",
+            message: "All unread mail marked as read. Enjoy inbox zero!",
+            preferredStyle: .alert
+        )
+        let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
+        alertController.addAction(okAction)
+        present(alertController, animated: true, completion: nil)
+    }
+
+    func didFail(service: MarkAsReadService) {
+        let alertController = UIAlertController(
+            title: "Operation failed",
+            message: "Mail could not be marked as read. Please try again later.",
+            preferredStyle: .alert
+        )
+        let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
+        alertController.addAction(okAction)
+        present(alertController, animated: true, completion: nil)
     }
 }
 

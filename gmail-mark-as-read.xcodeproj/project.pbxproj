@@ -19,6 +19,8 @@
 		C3357553235DD84B0068AC17 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3357552235DD84B0068AC17 /* AppDelegate.swift */; };
 		C335755A235DD84C0068AC17 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C3357559235DD84C0068AC17 /* Assets.xcassets */; };
 		C335755D235DD84C0068AC17 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C335755B235DD84C0068AC17 /* LaunchScreen.storyboard */; };
+		C376652423723011006A5C47 /* MarkAsReadService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C376652323723011006A5C47 /* MarkAsReadService.swift */; };
+		C37665272372F039006A5C47 /* Int+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C37665262372F039006A5C47 /* Int+Extension.swift */; };
 		C395B8B3235DE68E00C907B0 /* AppConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C395B8B2235DE68E00C907B0 /* AppConfiguration.swift */; };
 		C395B8B5235DE6EF00C907B0 /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C395B8B4235DE6EF00C907B0 /* AppConstants.swift */; };
 /* End PBXBuildFile section */
@@ -40,6 +42,8 @@
 		C3357559235DD84C0068AC17 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C335755C235DD84C0068AC17 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C335755E235DD84C0068AC17 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C376652323723011006A5C47 /* MarkAsReadService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkAsReadService.swift; sourceTree = "<group>"; };
+		C37665262372F039006A5C47 /* Int+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extension.swift"; sourceTree = "<group>"; };
 		C395B8B2235DE68E00C907B0 /* AppConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfiguration.swift; sourceTree = "<group>"; };
 		C395B8B4235DE6EF00C907B0 /* AppConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstants.swift; sourceTree = "<group>"; };
 		EC4657BFC2BB4568606A99AC /* Pods-gmail-mark-as-read.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-gmail-mark-as-read.debug.xcconfig"; path = "Target Support Files/Pods-gmail-mark-as-read/Pods-gmail-mark-as-read.debug.xcconfig"; sourceTree = "<group>"; };
@@ -114,6 +118,7 @@
 			isa = PBXGroup;
 			children = (
 				616E897D2371A7B700EBEB0D /* Unread mail */,
+				C376652323723011006A5C47 /* MarkAsReadService.swift */,
 				C310171C236F27AA0067BD31 /* MarkAsReadViewController.swift */,
 			);
 			path = "Mark as read";
@@ -140,6 +145,7 @@
 		C3357551235DD84B0068AC17 /* gmail-mark-as-read */ = {
 			isa = PBXGroup;
 			children = (
+				C37665252372F01C006A5C47 /* Extensions */,
 				C310171A236E3B730067BD31 /* gmail-mark-as-read.entitlements */,
 				C395B8B9235DE8C800C907B0 /* Application configuration */,
 				C30282D1235E922D0067D22A /* Application launch */,
@@ -151,6 +157,14 @@
 				C335755E235DD84C0068AC17 /* Info.plist */,
 			);
 			path = "gmail-mark-as-read";
+			sourceTree = "<group>";
+		};
+		C37665252372F01C006A5C47 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				C37665262372F039006A5C47 /* Int+Extension.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		C395B8B9235DE8C800C907B0 /* Application configuration */ = {
@@ -334,9 +348,11 @@
 				C3101714236E33280067BD31 /* LoginViewController.swift in Sources */,
 				C395B8B3235DE68E00C907B0 /* AppConfiguration.swift in Sources */,
 				C3101719236E379C0067BD31 /* LoginCoordinator.swift in Sources */,
+				C376652423723011006A5C47 /* MarkAsReadService.swift in Sources */,
 				C310171D236F27AA0067BD31 /* MarkAsReadViewController.swift in Sources */,
 				616E89812371AB7900EBEB0D /* UnreadMailService.swift in Sources */,
 				616E89842371B69E00EBEB0D /* Dependencies.swift in Sources */,
+				C37665272372F039006A5C47 /* Int+Extension.swift in Sources */,
 				C30282D3235E92600067D22A /* GoogleSignInService.swift in Sources */,
 				C3357553235DD84B0068AC17 /* AppDelegate.swift in Sources */,
 				C395B8B5235DE6EF00C907B0 /* AppConstants.swift in Sources */,

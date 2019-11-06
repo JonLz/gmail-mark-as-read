@@ -37,13 +37,13 @@ final class UnreadMailService {
             }
             
             if let error = error {
-                print("UnreadMailService error:\(error.localizedDescription)")
+                print("UnreadMailService query:\(query) error:\(error.localizedDescription)")
                 self.delegate?.didFail(service: self)
             } else if let label = responseObject as? GTLRGmail_Label,
                 let unreadMailCount = label.messagesUnread?.intValue {
                 self.delegate?.didComplete(service: self, unreadMailCount: unreadMailCount)
             } else {
-                print("UnreadMailService could not process ticket:\(ticket.description) responseObject:\(responseObject.debugDescription)")
+                print("UnreadMailService could not process query:\(query) ticket:\(ticket.description) responseObject:\(responseObject.debugDescription)")
             }
         }
     }
