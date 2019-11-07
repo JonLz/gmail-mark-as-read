@@ -44,6 +44,8 @@ final class MarkAsReadService {
     private let service: GTLRService
     private let user: GIDGoogleUser
     
+    private let maxIdsAllowedPerBatchModifyRequest: UInt = 1000
+    
     init(dependencies: Dependencies) {
         logService = dependencies.logService
         service = dependencies.gmailService
@@ -94,6 +96,8 @@ final class MarkAsReadService {
     private func listUnreadMessages(_ completion: @escaping (Result<[GTLRGmail_Message], MarkAsReadServiceError>) -> ()) {
         let query = GTLRGmailQuery_UsersMessagesList.query(withUserId: user.userID)
         query.labelIds = ["UNREAD"]
+        query.maxResults = maxIdsAllowedPerBatchModifyRequest
+        query.executionParameters.shouldFetchNextPages = true
         
         _ = service.executeQuery(query) { [weak self] (ticket, responseObject, error) in
             if let error = error {

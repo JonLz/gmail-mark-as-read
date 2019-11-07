@@ -50,8 +50,6 @@ final class UnreadMailView: UIView {
     }
     
     weak var delegate: UnreadMailViewDelegate?
-    private let errorLabel = UILabel()
-    private let loader = UIActivityIndicatorView(style: .gray)
     
     private lazy var reloadButton: UIButton = {
         let button = UIButton(type: .system)
@@ -61,10 +59,13 @@ final class UnreadMailView: UIView {
         return button
     }()
     
-    private let unreadMailLabel = UILabel()
+    private var loader = UIActivityIndicatorView(style: .gray)
+    private let errorLabel = UILabel().setTextColorLabel()
+    private let unreadMailLabel = UILabel().setTextColorLabel()
     
     init() {
         super.init(frame: .zero)
+        backgroundColor = .gmSystemBackground
         setUpLayout()
     }
     
@@ -72,9 +73,21 @@ final class UnreadMailView: UIView {
         fatalError()
     }
     
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        if #available(iOS 12, *) {
+            switch traitCollection.userInterfaceStyle {
+            case .dark: loader.style = .white
+            default: loader.style = .gray
+            }
+        }
+    }
+    
     @objc func handleReload() {
         delegate?.didTapReloadButton(view: self)
     }
+    
     
     func configure(for viewState: ViewState) {
         errorLabel.isHidden = viewState.isErrorHidden
