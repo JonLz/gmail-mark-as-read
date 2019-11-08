@@ -14,6 +14,8 @@ protocol UnreadMailViewDelegate: class {
 
 final class UnreadMailView: UIView {
     
+    // MARK: - ViewState
+    
     struct ViewState {
         let isErrorHidden: Bool
         let isLoaderHidden: Bool
@@ -49,7 +51,11 @@ final class UnreadMailView: UIView {
         }
     }
     
+    // MARK: - Properties
+    
     weak var delegate: UnreadMailViewDelegate?
+    
+    // MARK: - Views
     
     private lazy var reloadButton: UIButton = {
         let button = UIButton(type: .system)
@@ -59,9 +65,26 @@ final class UnreadMailView: UIView {
         return button
     }()
     
-    private var loader = UIActivityIndicatorView(style: .gray)
+    private lazy var loader = UIActivityIndicatorView(style: loaderStyle)
     private let errorLabel = UILabel().setTextColorLabel()
     private let unreadMailLabel = UILabel().setTextColorLabel()
+    
+    // MARK: - View helpers
+    
+    private var loaderStyle: UIActivityIndicatorView.Style {
+        if #available(iOS 12, *) {
+          switch traitCollection.userInterfaceStyle {
+          case .dark:
+            return .white
+          default:
+            return .gray
+          }
+        } else {
+            return .gray
+        }
+    }
+    
+    // MARK: - Init
     
     init() {
         super.init(frame: .zero)
@@ -72,22 +95,19 @@ final class UnreadMailView: UIView {
     required init?(coder aDecoder: NSCoder) {
         fatalError()
     }
+
+    // MARK: - View lifecycle
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        
-        if #available(iOS 12, *) {
-            switch traitCollection.userInterfaceStyle {
-            case .dark: loader.style = .white
-            default: loader.style = .gray
-            }
-        }
+        loader.style = loaderStyle
     }
+    
+    // MARK: - Implementation
     
     @objc func handleReload() {
         delegate?.didTapReloadButton(view: self)
     }
-    
     
     func configure(for viewState: ViewState) {
         errorLabel.isHidden = viewState.isErrorHidden
