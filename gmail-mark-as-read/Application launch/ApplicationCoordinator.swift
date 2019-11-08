@@ -20,18 +20,12 @@ enum LoggedInState {
     case loggedOut
 }
 
-struct AuthenticatedDependency: HasApplicationDependency, HasUserDependency, HasGmailServiceDependency, HasLogServiceDependency {
-    let applicationInteractor: ApplicationInteractable
-    let GIDGoogleUser: GIDGoogleUser
+struct ApplicationDependency: HasGmailServiceDependency, HasLogServiceDependency, HasSignInServiceDependency {
     let gmailService: GTLRService
-    let logService: LogServicing
-}
-
-struct UnauthenticatedDependency: HasLogServiceDependency, HasSignInServiceDependency {
     let logService: LogServicing
     let signInService: GoogleSignInService
     
-    static let make: UnauthenticatedDependency = {
+    static let make: ApplicationDependency = {
         struct LogContainer: HasLogServiceDependency {
             let logService: LogServicing
         }
@@ -40,20 +34,30 @@ struct UnauthenticatedDependency: HasLogServiceDependency, HasSignInServiceDepen
         let logContainer = LogContainer(logService: logService)
         let signInService = GoogleSignInService(dependencies: logContainer)
         
-        return UnauthenticatedDependency(logService: logService, signInService: signInService)
+        return ApplicationDependency(gmailService: GTLRGmailService(), logService: logService, signInService: signInService)
     }()
+}
+
+struct AuthenticatedDependency: HasApplicationDependency, HasUserDependency, HasGmailServiceDependency, HasLogServiceDependency {
+    let applicationInteractor: ApplicationInteractable
+    let GIDGoogleUser: GIDGoogleUser
+    let gmailService: GTLRService
+    let logService: LogServicing
 }
 
 final class ApplicationCoordinator {
 
+    typealias Dependencies = HasGmailServiceDependency & HasLogServiceDependency & HasSignInServiceDependency
+    
     weak var window: UIWindow?
     
-    private lazy var loginViewController = LoginViewController(dependencies: unauthenticatedDependency)
-    private lazy var signInService = unauthenticatedDependency.signInService
+    private lazy var loginViewController = LoginViewController(dependencies: dependencies)
+    private lazy var signInService = dependencies.signInService
     
-    private let unauthenticatedDependency = UnauthenticatedDependency.make
+    private let dependencies: Dependencies
     
-    init(window: UIWindow?) {
+    init(dependencies: Dependencies = ApplicationDependency.make, window: UIWindow?) {
+        self.dependencies = dependencies
         self.window = window
     }
     
@@ -86,8 +90,8 @@ final class ApplicationCoordinator {
         let authenticatedDependency = AuthenticatedDependency(
             applicationInteractor: self,
             GIDGoogleUser: user,
-            gmailService: GTLRGmailService(),
-            logService: LogService()
+            gmailService: dependencies.gmailService,
+            logService: dependencies.logService
         )
         return MarkAsReadViewController(dependencies: authenticatedDependency)
     }
