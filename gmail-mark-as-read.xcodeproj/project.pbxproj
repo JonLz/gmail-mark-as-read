@@ -39,6 +39,7 @@
 		616E897E2371A7F300EBEB0D /* UnreadMailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnreadMailView.swift; sourceTree = "<group>"; };
 		616E89802371AB7900EBEB0D /* UnreadMailService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnreadMailService.swift; sourceTree = "<group>"; };
 		616E89832371B69E00EBEB0D /* Dependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dependencies.swift; sourceTree = "<group>"; };
+		61BD9DEA237512720064A0F3 /* gmail-mark-as-read.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "gmail-mark-as-read.entitlements"; sourceTree = "<group>"; };
 		61C17D7F2373011A00087C82 /* GTLRErrorObject+LocalizedError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GTLRErrorObject+LocalizedError.swift"; sourceTree = "<group>"; };
 		C30282D2235E92600067D22A /* GoogleSignInService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleSignInService.swift; sourceTree = "<group>"; };
 		C3101713236E33280067BD31 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -169,6 +170,7 @@
 		C3357551235DD84B0068AC17 /* gmail-mark-as-read */ = {
 			isa = PBXGroup;
 			children = (
+				61BD9DEA237512720064A0F3 /* gmail-mark-as-read.entitlements */,
 				C395B8B9235DE8C800C907B0 /* Application configuration */,
 				C30282D1235E922D0067D22A /* Application launch */,
 				615CEA7423750F8D0033EE0A /* Common */,
@@ -526,6 +528,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "gmail-mark-as-read/gmail-mark-as-read.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = VX5B6VM8XV;
@@ -537,6 +540,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.prodco.gmail-mark-as-read";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -548,6 +552,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "gmail-mark-as-read/gmail-mark-as-read.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = VX5B6VM8XV;
@@ -559,6 +564,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.prodco.gmail-mark-as-read";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
