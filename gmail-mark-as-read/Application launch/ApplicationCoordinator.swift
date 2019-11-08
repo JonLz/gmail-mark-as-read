@@ -52,6 +52,7 @@ final class ApplicationCoordinator {
     weak var window: UIWindow?
     
     private lazy var loginViewController = LoginViewController(dependencies: dependencies)
+    private var loggedInViewController: MarkAsReadViewController?
     private lazy var signInService = dependencies.signInService
     
     private let dependencies: Dependencies
@@ -76,17 +77,37 @@ final class ApplicationCoordinator {
         return signInService.application(app, open: url, options: options)
     }
     
+    func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
+        switch ApplicationShortcut(rawValue: shortcutItem.type) {
+        case .markAsRead:
+            loggedInViewController?.markAsRead()
+            completionHandler(true)
+        default:
+            completionHandler(false)
+        }
+    }
+    
+    func applicationShortcutItems() -> [UIApplicationShortcutItem] {
+        if signInService.hasPreviousSignIn {
+            return [ApplicationShortcut.markAsRead.shortcutItem]
+        } else {
+            return []
+        }
+    }
+    
     private func setLoginState(_ loginState: LoggedInState) {
         switch loginState {
         case .loggedIn(let user):
-            UIApplication.setRootView(makeLoggedInViewController(user: user))
+            let loggedInViewController = makeLoggedInViewController(user: user)
+            self.loggedInViewController = loggedInViewController
+            UIApplication.setRootView(loggedInViewController)
         case .loggedOut:
             signInService.logout()
             UIApplication.setRootView(loginViewController)
         }
     }
     
-    private func makeLoggedInViewController(user: GIDGoogleUser) -> UIViewController {
+    private func makeLoggedInViewController(user: GIDGoogleUser) -> MarkAsReadViewController {
         let authenticatedDependency = AuthenticatedDependency(
             applicationInteractor: self,
             GIDGoogleUser: user,

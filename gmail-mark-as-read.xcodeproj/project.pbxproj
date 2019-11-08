@@ -15,6 +15,7 @@
 		616E897F2371A7F300EBEB0D /* UnreadMailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616E897E2371A7F300EBEB0D /* UnreadMailView.swift */; };
 		616E89812371AB7900EBEB0D /* UnreadMailService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616E89802371AB7900EBEB0D /* UnreadMailService.swift */; };
 		616E89842371B69E00EBEB0D /* Dependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616E89832371B69E00EBEB0D /* Dependencies.swift */; };
+		61BD9DEC237518BB0064A0F3 /* ApplicationShortcut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BD9DEB237518BB0064A0F3 /* ApplicationShortcut.swift */; };
 		61C17D802373011A00087C82 /* GTLRErrorObject+LocalizedError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C17D7F2373011A00087C82 /* GTLRErrorObject+LocalizedError.swift */; };
 		C30282D3235E92600067D22A /* GoogleSignInService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C30282D2235E92600067D22A /* GoogleSignInService.swift */; };
 		C3101714236E33280067BD31 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3101713236E33280067BD31 /* LoginViewController.swift */; };
@@ -40,6 +41,7 @@
 		616E89802371AB7900EBEB0D /* UnreadMailService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnreadMailService.swift; sourceTree = "<group>"; };
 		616E89832371B69E00EBEB0D /* Dependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dependencies.swift; sourceTree = "<group>"; };
 		61BD9DEA237512720064A0F3 /* gmail-mark-as-read.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "gmail-mark-as-read.entitlements"; sourceTree = "<group>"; };
+		61BD9DEB237518BB0064A0F3 /* ApplicationShortcut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationShortcut.swift; sourceTree = "<group>"; };
 		61C17D7F2373011A00087C82 /* GTLRErrorObject+LocalizedError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GTLRErrorObject+LocalizedError.swift"; sourceTree = "<group>"; };
 		C30282D2235E92600067D22A /* GoogleSignInService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleSignInService.swift; sourceTree = "<group>"; };
 		C3101713236E33280067BD31 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -126,6 +128,7 @@
 			children = (
 				C3357552235DD84B0068AC17 /* AppDelegate.swift */,
 				C3101716236E35050067BD31 /* ApplicationCoordinator.swift */,
+				61BD9DEB237518BB0064A0F3 /* ApplicationShortcut.swift */,
 			);
 			path = "Application launch";
 			sourceTree = "<group>";
@@ -374,6 +377,7 @@
 			files = (
 				615CEA712373DF310033EE0A /* UILabel+Extension.swift in Sources */,
 				616E897F2371A7F300EBEB0D /* UnreadMailView.swift in Sources */,
+				61BD9DEC237518BB0064A0F3 /* ApplicationShortcut.swift in Sources */,
 				C3101714236E33280067BD31 /* LoginViewController.swift in Sources */,
 				C395B8B3235DE68E00C907B0 /* AppConfiguration.swift in Sources */,
 				615CEA732375037F0033EE0A /* UIApplication+Extension.swift in Sources */,

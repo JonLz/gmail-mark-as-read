@@ -27,5 +27,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any]) -> Bool {
         return applicationCoordinator.application(app, open: url, options: options)
     }
+    
+    func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
+        applicationCoordinator.application(application, performActionFor: shortcutItem, completionHandler: completionHandler)
+    }
+    
+    func applicationWillResignActive(_ application: UIApplication) {
+        application.shortcutItems = applicationCoordinator.applicationShortcutItems()
+    }
 }
 
