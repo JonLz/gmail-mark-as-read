@@ -9,10 +9,6 @@
 import UIKit
 
 extension UIApplication {
-    
-    static var loginAnimation: UIView.AnimationOptions = .transitionCrossDissolve
-    static var logoutAnimation: UIView.AnimationOptions = .transitionCrossDissolve
-    
     public static func setRootView(_ viewController: UIViewController,
                                    options: UIView.AnimationOptions = .transitionCrossDissolve,
                                    animated: Bool = true,
