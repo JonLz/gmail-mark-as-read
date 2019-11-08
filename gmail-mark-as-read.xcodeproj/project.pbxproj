@@ -43,7 +43,6 @@
 		C30282D2235E92600067D22A /* GoogleSignInService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleSignInService.swift; sourceTree = "<group>"; };
 		C3101713236E33280067BD31 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		C3101716236E35050067BD31 /* ApplicationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationCoordinator.swift; sourceTree = "<group>"; };
-		C310171A236E3B730067BD31 /* gmail-mark-as-read.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "gmail-mark-as-read.entitlements"; sourceTree = "<group>"; };
 		C310171C236F27AA0067BD31 /* MarkAsReadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkAsReadViewController.swift; sourceTree = "<group>"; };
 		C335754F235DD84B0068AC17 /* gmail-mark-as-read.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "gmail-mark-as-read.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3357552235DD84B0068AC17 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -75,6 +74,16 @@
 				613FF368237307A5001EC31A /* LogService.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		615CEA7423750F8D0033EE0A /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				616E89822371B69500EBEB0D /* Dependencies */,
+				C37665252372F01C006A5C47 /* Extensions */,
+				613FF3672373079E001EC31A /* Services */,
+			);
+			path = Common;
 			sourceTree = "<group>";
 		};
 		616E897D2371A7B700EBEB0D /* Unread mail */ = {
@@ -160,12 +169,9 @@
 		C3357551235DD84B0068AC17 /* gmail-mark-as-read */ = {
 			isa = PBXGroup;
 			children = (
-				613FF3672373079E001EC31A /* Services */,
-				C37665252372F01C006A5C47 /* Extensions */,
-				C310171A236E3B730067BD31 /* gmail-mark-as-read.entitlements */,
 				C395B8B9235DE8C800C907B0 /* Application configuration */,
 				C30282D1235E922D0067D22A /* Application launch */,
-				616E89822371B69500EBEB0D /* Dependencies */,
+				615CEA7423750F8D0033EE0A /* Common */,
 				C310171B236F27980067BD31 /* Mark as read */,
 				C3101712236E330F0067BD31 /* Sign in */,
 				C3357559235DD84C0068AC17 /* Assets.xcassets */,

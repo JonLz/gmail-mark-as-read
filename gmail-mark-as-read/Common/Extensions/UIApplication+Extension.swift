@@ -9,11 +9,13 @@
 import UIKit
 
 extension UIApplication {
-    public static func setRootView(_ viewController: UIViewController,
-                                   options: UIView.AnimationOptions = .transitionCrossDissolve,
-                                   animated: Bool = true,
-                                   duration: TimeInterval = 0.5,
-                                   completion: (() -> Void)? = nil) {
+    public static func setRootView(
+        _ viewController: UIViewController,
+        options: UIView.AnimationOptions = .transitionCrossDissolve,
+        animated: Bool = true,
+        duration: TimeInterval = 0.5,
+        completion: (() -> Void)? = nil) {
+        
         guard let keyWindow = UIApplication.shared.keyWindow else {
             return
         }
