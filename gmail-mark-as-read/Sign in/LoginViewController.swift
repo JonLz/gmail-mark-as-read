@@ -11,24 +11,18 @@ import GoogleSignIn
 
 final class LoginViewController: UIViewController {
 
+    typealias Dependencies = HasSignInServiceDependency
+    
     private let signInService: GoogleSignInService
     private let signInButton = GIDSignInButton()
 
-    init(signInService: GoogleSignInService) {
-        self.signInService = signInService
+    init(dependencies: Dependencies) {
+        self.signInService = dependencies.signInService
         super.init(nibName: nil, bundle: nil)
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        if signInService.hasPreviousSignIn {
-            signInService.restorePreviousSignIn()
-        }
     }
 
     override func viewDidLoad() {

@@ -23,6 +23,10 @@ protocol HasLogServiceDependency {
     var logService: LogServicing { get }
 }
 
+protocol HasSignInServiceDependency {
+    var signInService: GoogleSignInService { get }
+}
+
 protocol HasUnreadMailServiceDependency {
     var unreadMailService: UnreadMailService { get }
 }

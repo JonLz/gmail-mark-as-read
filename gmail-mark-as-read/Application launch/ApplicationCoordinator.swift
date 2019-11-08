@@ -15,6 +15,11 @@ protocol ApplicationInteractable {
     func logout()
 }
 
+enum LoggedInState {
+    case loggedIn(user: GIDGoogleUser)
+    case loggedOut
+}
+
 struct AuthenticatedDependency: HasApplicationDependency, HasUserDependency, HasGmailServiceDependency, HasLogServiceDependency {
     let applicationInteractor: ApplicationInteractable
     let GIDGoogleUser: GIDGoogleUser
@@ -22,29 +27,61 @@ struct AuthenticatedDependency: HasApplicationDependency, HasUserDependency, Has
     let logService: LogServicing
 }
 
-struct UnauthenticatedDependency: HasLogServiceDependency {
+struct UnauthenticatedDependency: HasLogServiceDependency, HasSignInServiceDependency {
     let logService: LogServicing
+    let signInService: GoogleSignInService
     
-    static let make = UnauthenticatedDependency(logService: LogService())
+    static let make: UnauthenticatedDependency = {
+        struct LogContainer: HasLogServiceDependency {
+            let logService: LogServicing
+        }
+        
+        let logService = LogService()
+        let logContainer = LogContainer(logService: logService)
+        let signInService = GoogleSignInService(dependencies: logContainer)
+        
+        return UnauthenticatedDependency(logService: logService, signInService: signInService)
+    }()
 }
 
 final class ApplicationCoordinator {
 
     weak var window: UIWindow?
-    private let loginCoordinator = LoginCoordinator()
+    
+    private lazy var loginViewController = LoginViewController(dependencies: unauthenticatedDependency)
+    private lazy var signInService = unauthenticatedDependency.signInService
+    
+    private let unauthenticatedDependency = UnauthenticatedDependency.make
     
     init(window: UIWindow?) {
         self.window = window
     }
     
     func start() {
-        window?.rootViewController = makeLoginViewController()
+        signInService.delegate = self
+        signInService.start()
+        
+        if signInService.hasPreviousSignIn {
+            signInService.restorePreviousSignIn()
+        } else {
+            setLoginState(.loggedOut)
+        }
     }
-
+    
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any]) -> Bool {
-        return loginCoordinator.application(app, open: url, options: options)
+        return signInService.application(app, open: url, options: options)
     }
-
+    
+    private func setLoginState(_ loginState: LoggedInState) {
+        switch loginState {
+        case .loggedIn(let user):
+            UIApplication.setRootView(makeLoggedInViewController(user: user))
+        case .loggedOut:
+            signInService.logout()
+            UIApplication.setRootView(loginViewController)
+        }
+    }
+    
     private func makeLoggedInViewController(user: GIDGoogleUser) -> UIViewController {
         let authenticatedDependency = AuthenticatedDependency(
             applicationInteractor: self,
@@ -54,20 +91,17 @@ final class ApplicationCoordinator {
         )
         return MarkAsReadViewController(dependencies: authenticatedDependency)
     }
-    
-    private func makeLoginViewController() -> UIViewController {
-        loginCoordinator.start()
-        loginCoordinator.delegate = self
-        return loginCoordinator.loginViewController
-    }
 }
 
-// MARK: - LoginCoordinatorDelegate
+// MARK: - GoogleSignInServiceDelegate
 
-extension ApplicationCoordinator: LoginCoordinatorDelegate {
-    func didSignIn(coordinator: LoginCoordinator, user: GIDGoogleUser) {
-        let loggedInViewController = makeLoggedInViewController(user: user)
-        window?.rootViewController?.present(loggedInViewController, animated: false, completion: nil)
+extension ApplicationCoordinator: GoogleSignInServiceDelegate {
+    func didSignIn(signInService: GoogleSignInService, user: GIDGoogleUser) {
+        setLoginState(.loggedIn(user: user))
+    }
+    
+    func failedSignIn() {
+        setLoginState(.loggedOut)
     }
 }
 
@@ -75,7 +109,6 @@ extension ApplicationCoordinator: LoginCoordinatorDelegate {
 
 extension ApplicationCoordinator: ApplicationInteractable {
     func logout() {
-        loginCoordinator.logout()
-        window?.rootViewController?.dismiss(animated: true, completion: nil)
+        setLoginState(.loggedOut)
     }
 }
