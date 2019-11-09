@@ -63,6 +63,7 @@ final class ApplicationCoordinator {
     }
     
     func start() {
+        UIApplication.setRootView(makeLoadingViewController())
         signInService.delegate = self
         signInService.start()
         
@@ -105,6 +106,12 @@ final class ApplicationCoordinator {
             signInService.logout()
             UIApplication.setRootView(loginViewController)
         }
+    }
+    
+    private func makeLoadingViewController() -> UIViewController {
+        let loadingViewController = UIViewController()
+        loadingViewController.view.backgroundColor = .white
+        return loadingViewController
     }
     
     private func makeLoggedInViewController(user: GIDGoogleUser) -> MarkAsReadViewController {
