@@ -110,7 +110,7 @@ final class ApplicationCoordinator {
     
     private func makeLoadingViewController() -> UIViewController {
         let loadingViewController = UIViewController()
-        loadingViewController.view.backgroundColor = .white
+        loadingViewController.view.backgroundColor = signInService.hasPreviousSignIn ? .gmSystemBackground : .white
         return loadingViewController
     }
     
