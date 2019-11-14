@@ -81,7 +81,7 @@ final class ApplicationCoordinator {
     func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
         switch ApplicationShortcut(rawValue: shortcutItem.type) {
         case .markAsRead:
-            loggedInViewController?.markAsRead()
+            loggedInViewController?.enqueueMarkAsReadJob()
             completionHandler(true)
         default:
             completionHandler(false)

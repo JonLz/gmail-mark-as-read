@@ -38,6 +38,9 @@ final class MarkAsReadViewController: UIViewController {
         return button
     }()
     
+    // Set by an application shortcut to trigger a mark as read operation
+    private var isMarkAsReadJobEnqueued: Bool = false
+    
     init(dependencies: Dependencies) {
         applicationInteractor = dependencies.applicationInteractor
         markAsReadService = MarkAsReadService(dependencies: dependencies)
@@ -48,6 +51,8 @@ final class MarkAsReadViewController: UIViewController {
         markAsReadService.delegate = self
         unreadMailView.delegate = self
         unreadMailService.delegate = self
+        
+        registerObservers()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -63,12 +68,22 @@ final class MarkAsReadViewController: UIViewController {
         unreadMailService.fetchUnreadMail()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        handleEnqueuedJobs()
+    }
+    
     @objc func markAsRead() {
         markAsReadService.batchMarkAsRead()
     }
     
     @objc func logout() {
         applicationInteractor.logout()
+    }
+    
+    func enqueueMarkAsReadJob() {
+        isMarkAsReadJobEnqueued = true
     }
     
     private func setUpLayout() {
@@ -85,6 +100,17 @@ final class MarkAsReadViewController: UIViewController {
         logoutButton.bottomAnchor == view.bottomAnchor - 60
         logoutButton.centerXAnchor == view.centerXAnchor
         logoutButton.sizeAnchors == CGSize(width: 100, height: 40)
+    }
+    
+    @objc private func handleEnqueuedJobs() {
+        if isMarkAsReadJobEnqueued {
+            isMarkAsReadJobEnqueued = false
+            markAsRead()
+        }
+    }
+    
+    private func registerObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(handleEnqueuedJobs), name: UIApplication.willEnterForegroundNotification, object: nil)
     }
 }
 
