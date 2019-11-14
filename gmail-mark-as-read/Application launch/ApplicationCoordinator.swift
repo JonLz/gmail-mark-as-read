@@ -6,7 +6,7 @@
 //  Copyright © 2019 Product Corp. All rights reserved.
 //
 
-import UIKit
+import Anchorage
 import GoogleSignIn
 import GoogleAPIClientForREST
 
@@ -111,6 +111,12 @@ final class ApplicationCoordinator {
     private func makeLoadingViewController() -> UIViewController {
         let loadingViewController = UIViewController()
         loadingViewController.view.backgroundColor = signInService.hasPreviousSignIn ? .gmSystemBackground : .white
+        
+        let spinner = UIActivityIndicatorView(style: loadingViewController.view.systemLoaderStyle)
+        spinner.startAnimating()
+        loadingViewController.view.addSubview(spinner)
+        spinner.centerAnchors == loadingViewController.view.centerAnchors
+        
         return loadingViewController
     }
     

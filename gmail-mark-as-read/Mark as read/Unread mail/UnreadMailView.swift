@@ -65,24 +65,9 @@ final class UnreadMailView: UIView {
         return button
     }()
     
-    private lazy var loader = UIActivityIndicatorView(style: loaderStyle)
+    private lazy var loader = UIActivityIndicatorView(style: systemLoaderStyle)
     private let errorLabel = UILabel().setTextColorLabel()
     private let unreadMailLabel = UILabel().setTextColorLabel()
-    
-    // MARK: - View helpers
-    
-    private var loaderStyle: UIActivityIndicatorView.Style {
-        if #available(iOS 12, *) {
-          switch traitCollection.userInterfaceStyle {
-          case .dark:
-            return .white
-          default:
-            return .gray
-          }
-        } else {
-            return .gray
-        }
-    }
     
     // MARK: - Init
     
@@ -100,7 +85,7 @@ final class UnreadMailView: UIView {
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        loader.style = loaderStyle
+        loader.style = systemLoaderStyle
     }
     
     // MARK: - Implementation
