@@ -14,7 +14,7 @@ final class MarkAsReadViewController: UIViewController {
     typealias Dependencies = HasApplicationDependency & HasUserDependency & HasGmailServiceDependency & HasLogServiceDependency
     
     let applicationInteractor: ApplicationInteractable
-    let markAsReadService: MarkAsReadService
+    let markAllAsReadService: MarkAllAsReadService
     let unreadMailService: UnreadMailService
     let user: GIDGoogleUser
     
@@ -22,6 +22,13 @@ final class MarkAsReadViewController: UIViewController {
         let view = UnreadMailView()
         view.configure(for: .loading)
         return view
+    }()
+    
+    private lazy var statusUpdateLabel: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .center
+        label.numberOfLines = 0
+        return label
     }()
     
     private lazy var markAsReadButton: UIButton = {
@@ -43,12 +50,12 @@ final class MarkAsReadViewController: UIViewController {
     
     init(dependencies: Dependencies) {
         applicationInteractor = dependencies.applicationInteractor
-        markAsReadService = MarkAsReadService(dependencies: dependencies)
+        markAllAsReadService = MarkAllAsReadService(dependencies: dependencies)
         unreadMailService = UnreadMailService(dependencies: dependencies)
         user = dependencies.GIDGoogleUser
         super.init(nibName: nil, bundle: nil)
 
-        markAsReadService.delegate = self
+        markAllAsReadService.delegate = self
         unreadMailView.delegate = self
         unreadMailService.delegate = self
         
@@ -75,7 +82,8 @@ final class MarkAsReadViewController: UIViewController {
     }
     
     @objc func markAsRead() {
-        markAsReadService.batchMarkAsRead()
+        setStatusText("")
+        markAllAsReadService.batchMarkAsRead()
     }
     
     @objc func logout() {
@@ -88,12 +96,16 @@ final class MarkAsReadViewController: UIViewController {
     
     private func setUpLayout() {
         view.addSubview(unreadMailView)
+        view.addSubview(statusUpdateLabel)
         view.addSubview(markAsReadButton)
         view.addSubview(logoutButton)
         
         unreadMailView.topAnchor == view.verticalAnchors.first + 60
         unreadMailView.heightAnchor == 60
         unreadMailView.horizontalAnchors == view.horizontalAnchors + 20
+        
+        statusUpdateLabel.topAnchor == unreadMailView.bottomAnchor + 60
+        statusUpdateLabel.horizontalAnchors == unreadMailView.horizontalAnchors
         
         markAsReadButton.centerAnchors == view.centerAnchors
         
@@ -109,13 +121,23 @@ final class MarkAsReadViewController: UIViewController {
         }
     }
     
+    private func setStatusText(_ text: String) {
+        UIView.animate(withDuration: 0.5) {
+            self.statusUpdateLabel.text = text
+        }
+    }
+    
     private func registerObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(handleEnqueuedJobs), name: UIApplication.willEnterForegroundNotification, object: nil)
     }
 }
 
-extension MarkAsReadViewController: MarkAsReadServiceDelegate {
-    func didComplete(service: MarkAsReadService) {
+extension MarkAsReadViewController: MarkAllAsReadServiceDelegate {
+    func didProgress(lastBatchMarkedCount: Int, totalMarkedAsRead: Int) {
+        setStatusText("Marking email as read\n\nPlease wait...\n\nTotal marked as read: \(totalMarkedAsRead)")
+    }
+    
+    func didComplete(service: MarkAllAsReadService, totalMarkedAsRead: Int) {
         unreadMailView.configure(for: .loading)
         unreadMailService.fetchUnreadMail()
 
@@ -129,7 +151,7 @@ extension MarkAsReadViewController: MarkAsReadServiceDelegate {
         present(alertController, animated: true, completion: nil)
     }
 
-    func didFail(service: MarkAsReadService, error: MarkAsReadServiceError) {
+    func didFail(service: MarkAllAsReadService, error: MarkAllAsReadServiceError) {
         let alertController = UIAlertController(
             title: "Operation failed",
             message: error.errorDescription,
@@ -138,6 +160,8 @@ extension MarkAsReadViewController: MarkAsReadServiceDelegate {
         let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
         alertController.addAction(okAction)
         present(alertController, animated: true, completion: nil)
+        
+        setStatusText("")
     }
 }
 
